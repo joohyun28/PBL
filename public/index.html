@@ -20,10 +20,6 @@
         <td><input type="text" name="name" id="name"></td>
       </tr>
       <tr>
-        <td><label>메타마스크링크</label></td>
-        <td><input type="text" name="metamask" id="metamask"></td>
-      </tr>
-      <tr>
         <td><label>비밀번호</label></td>
         <td><input type="password" name="password" id="password"></td>
       </tr>
@@ -73,7 +69,6 @@
         var user = {
           id: $('#id').val(),
           name: $('#name').val(),
-          metamask: $('#metamask').val(),
           password: $('#password').val(),
         }
         db.collection('user').doc($('#id').val()).set(user).then((result) => {
