@@ -17,7 +17,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css" rel="stylesheet" media="all">
 
 
-  <title>마이페이지</title>
+  <title>판매</title>
 </head>
 
 
@@ -36,9 +36,9 @@
       <nav id="nav">
           <ul>
               <li><a href="index.html">Home</a></li>
-              <li><a href="sales.html">구매</a></li>
+              <li><a href="buy.html">구매</a></li>
               <li class="current">
-                <a href="mypage.html">판매</a>
+                <a href="sales.html">판매</a>
               </li>
               <li><a href="login.html">로그인</a></li>
             </ul>
@@ -134,7 +134,7 @@
                 price: $('#price').val()
               }).then(() => {
                 console.log("Document successfully updated!");
-                window.location.href = "mypage.html"
+                window.location.href = "sales.html"
               })
                 .catch((error) => {
                   // The document probably doesn't exist.
@@ -182,7 +182,7 @@
                 price: "null"
               }).then(() => {
                 console.log("Document successfully updated!");
-                window.location.href = "mypage.html"
+                window.location.href = "buy.html"
               })
                 .catch((error) => {
                   // The document probably doesn't exist.
@@ -192,7 +192,7 @@
             });
           });
         });
-    })
+    });
 
   </script>
 </body>
