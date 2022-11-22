@@ -2,13 +2,13 @@
 <html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="assets/css/main.css" />
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <!--<link rel="stylesheet" href="assets/css/main2.css" />-->
 
-
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"
         media="all">
 
 
@@ -17,71 +17,86 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css" rel="stylesheet" media="all">
 
 
-    <!-- Bootstrap bootstrap-touch-slider Slider Main Style Sheet -->
-    <link href="assets/css/bootstrap-touch-slider.css" rel="stylesheet" media="all">
-    <title>Sales</title>
+  <title>마이페이지</title>
 </head>
 
-<body class="homepage is-preload">
-    <div id="page-wrapper">
-        <!-- Nav -->
-        <nav id="nav">
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li class="current"><a href="sales.html">구매</a></li>
-                <li><a href="mypage.html">판매</a></li>
-                <li><a href="login.html">로그인</a></li>
-              </ul>
-        </nav>
 
-    </div>
+<body class="is-preload">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.touchswipe/1.6.18/jquery.touchSwipe.min.js"></script>
+
 </body>
 
-<body> 
 
-      <div class="myContent"></div>
+<body class="homepage is-preload">
+  <div id="page-wrapper">
+      <!-- Nav -->
+      <nav id="nav">
+          <ul>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="sales.html">구매</a></li>
+              <li class="current">
+                <a href="mypage.html">판매</a>
+              </li>
+              <li><a href="login.html">로그인</a></li>
+            </ul>
+      </nav>
+
+  </div>
+</body>
+
+<body>    <div class="myContent"></div>
 </body>
 
 <body>
 
+  <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-storage.js"></script>
 
-    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-firestore.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-storage.js"></script>
+  <script>
+    var firebaseConfig = {
+      apiKey: "AIzaSyDYu8NfIoLK2iQj-3PTmcYRGmqS5B3f4Uo",
+      authDomain: "dbpbl-13bbf.firebaseapp.com",
+      databaseURL: "https://dbpbl-13bbf-default-rtdb.firebaseio.com",
+      projectId: "dbpbl-13bbf",
+      storageBucket: "dbpbl-13bbf.appspot.com",
+      messagingSenderId: "379273770681",
+      appId: "1:379273770681:web:b25788b8098ffb4a7c8d68",
+      measurementId: "G-EN3FK5T60E"
+    };
 
-    <script>
-        var firebaseConfig = {
-            apiKey: "AIzaSyDYu8NfIoLK2iQj-3PTmcYRGmqS5B3f4Uo",
-            authDomain: "dbpbl-13bbf.firebaseapp.com",
-            databaseURL: "https://dbpbl-13bbf-default-rtdb.firebaseio.com",
-            projectId: "dbpbl-13bbf",
-            storageBucket: "dbpbl-13bbf.appspot.com",
-            messagingSenderId: "379273770681",
-            appId: "1:379273770681:web:b25788b8098ffb4a7c8d68",
-            measurementId: "G-EN3FK5T60E"
-        };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+  </script>
 
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-    </script>
+  <script>
 
+    //ticketDB 데이터 가져오기
+    var userid
 
-    <script>
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        userid = user.uid; //사용자 아이디 가져옴
+        console.log(userid);
+      } else {
 
-        //판매중인 티켓 리스트 나열 
-        //데이터 가져오기
-        const db = firebase.firestore();
-        db.collection('ticket')
-            .where('price', '!=', 'null')
-            .get()
-            .then((result) => {
+      }
+      const db = firebase.firestore();
+      db.collection('ticket')
+        .where('price', '==', 'null') //price가 null인 값. 판매되지 않은 티켓 가져오기
+        .where('uid', '==', userid)
+        .get()
+        .then((결과) => {
 
-                result.forEach((doc) => {
-                    console.log(doc.data())
-                    const userTemplate = `
-                    <div style=" float: left; padding:3px;  width: 50%;">
+          결과.forEach((doc) => {
+            console.log(doc.data())
+            const userTemplate = `
+            <div style=" float: left; padding:3px;  width: 50%;">
               <div style=" float: left; text-align : center; width: 40%;">
                 <img src="images/TicketPoster${doc.data().tName}.jpg" alt="Bootstrap Touch Slider" class="slide-image" height="200" width="150"/>
               </div>
@@ -91,51 +106,95 @@
                 <p class="user-box__uid">   티켓 가격 : ${doc.data().tCost}</p>
                 <p class="user-box__uid">   공연명 : ${doc.data().tName}</p>
                 <p class="user-box__uid">   예매자명 : ${doc.data().uid}</p>
-                <p class="user-box__tCost">   판매 가격 : ${doc.data().price}</p>
-                <button type="button" id="sBtn">구매</button>
-            </div>
+                <input type="text" name="price" id="price">
+                <button type="button" id="tpButton">판매</button>
+                </div>
+              </div> 
         </div>`;
-                    var userid
-                    firebase.auth().onAuthStateChanged((user) => {
-                        if (user) {
-                            userid = user.uid; //사용자 아이디 가져옴
-                            console.log(userid);
-                        }
-                    });
+            document.querySelector('.myContent').insertAdjacentHTML('afterbegin', userTemplate);
 
-                    document.querySelector('.myContent').insertAdjacentHTML('afterbegin', userTemplate);
-                    //const db = firebase.firestore();
-                    db.collection('ticket')
-                    $('#sBtn').click(function () {  //구매 버튼을 클릭한 결과
-                        if (confirm('정말로 티켓을 구매하시겠습니까?')) {
-                            //티켓DB에서 아이디 변경 (판매자 → 구매자)
-                            //티켓 정보 가져와서 소유자명 변경하기
-                            db.collection('ticket').doc(doc.id).update({
-                                //**로그인된 사람으로 수정하기**
-                                uid: userid,
-                                //price 값 'null'로 변경
-                                price: "null"
-                            }).then(() => {
-                                console.log("Owner changed!!");
-                                window.location.href = "sales.html"
-                            })
-                                .catch((error) => {
-                                    // The document probably doesn't exist.
-                                    console.error("Error rewritten: ", error);
-                                });
+            //const db = firebase.firestore();
+            db.collection('ticket')
+            $('#tpButton').click(function () {  //판매 버튼을 클릭한 결과
+              if (document.getElementById("price").value == "") { //빈칸이면 알림창
+                alert("가격을 입력해주세요.");
+                return false;
+              }
+              if (doc.data().tCost < parseInt(document.getElementById("price").value)) { //가격이 원가보다 높으면 에러
+                alert("원가 이하 가격을 입력해주세요.");
+                return false;
+              }
+              else
+                if (!confirm('정말로 티켓을 판매하시겠습니까?')) {
+                  return
 
-                            return
-                        }
-                    });
-
-
+                }
+              //ticketDB에 tPrice 값 추가
+              db.collection('ticket').doc(doc.id).update({
+                price: $('#price').val()
+              }).then(() => {
+                console.log("Document successfully updated!");
+                window.location.href = "mypage.html"
+              })
+                .catch((error) => {
+                  // The document probably doesn't exist.
+                  console.error("Error updating document: ", error);
                 });
-
             });
+          });
+        });
 
-    </script>
 
 
+      db.collection('ticket')
+        .where('price', '!=', 'null')
+        .where('uid', '==', userid)
+        .get()
+        .then((결과) => {
+
+          결과.forEach((doc) => {
+            console.log(doc.data())
+            const userTemplate = `
+            <div style=" float: left; padding:3px;  width: 50%;">
+              <div style=" float: left; text-align : center; width: 40%;">
+                <img src="images/TicketPoster${doc.data().tName}.jpg" alt="Bootstrap Touch Slider" class="slide-image" height="200" width="150"/>
+              </div>
+              <div style=" float: left; width: 60%;">
+                <p class="user-box__uid">   티켓 번호 : ${doc.data().tNumber}</p>
+                <p class="user-box__uid">   공연일자 : ${doc.data().tDate}</p>
+                <p class="user-box__uid">   티켓 가격 : ${doc.data().tCost}</p>
+                <p class="user-box__uid">   공연명 : ${doc.data().tName}</p>
+                <p class="user-box__uid">   예매자명 : ${doc.data().uid}</p>
+                <button type="button" name="cancell" id="cancell">판매 취소</button>
+                </div>
+              </div> 
+        </div>`;
+            document.querySelector('.myContent').insertAdjacentHTML('afterbegin', userTemplate);
+
+            //const db = firebase.firestore();
+            db.collection('ticket')
+            $('#cancell').click(function () {  //취소 버튼을 클릭한 결과
+              !confirm('정말로 티켓을 취소하시겠습니까?')
+
+              //ticketDB에서 price 값 삭제
+              db.collection('ticket').doc(doc.id).update({
+                //price 값 'null'로 변경
+                price: "null"
+              }).then(() => {
+                console.log("Document successfully updated!");
+                window.location.href = "mypage.html"
+              })
+                .catch((error) => {
+                  // The document probably doesn't exist.
+                  console.error("Error updating document: ", error)
+                });
+              return
+            });
+          });
+        });
+    })
+
+  </script>
 </body>
 
 </html>
