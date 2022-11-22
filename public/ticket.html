@@ -30,8 +30,8 @@
                 <li class="current">
                   <a href="ticket.html">예매</a>
                 </li>
-                <li><a href="sales.html">구매</a></li>
-                <li><a href="mypage.html">판매</a></li>
+                <li><a href="buy.html">구매</a></li>
+                <li><a href="sales.html">판매</a></li>
                 <li><a href="login.html">로그인</a></li>
               </ul>
         </nav>
@@ -51,9 +51,9 @@
         <button type="button" id="ticket">티켓 예매하기</button>
         <p></p>
         <!--공백을 주기 위해 p태그 사용-->
-        <button type="button" id="mypage">마이페이지</button>
+        <button type="button" id="sales">판매페이지</button>
         <p></p>
-        <button type="button" id="sales">구매페이지</button>
+        <button type="button" id="buy">구매페이지</button>
         <p></p>
         <button type="button" id="logout">로그아웃</button><br>
     </form>
@@ -127,12 +127,12 @@
         });
 
 
-        //마이페이지 이동
-        $('#mypage').click(function () {
-            window.location.href = "mypage.html"
+        //구매페이지 이동
+        $('#buy').click(function () {
+            window.location.href = "buy.html"
         });
 
-        //구매페이지 이동
+        //판매페이지 이동
         $('#sales').click(function () {
             window.location.href = "sales.html"
         });
