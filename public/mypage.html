@@ -98,7 +98,7 @@
             const userTemplate = `
             <div style=" float: left; padding:3px;  width: 50%;">
               <div style=" float: left; text-align : center; width: 40%;">
-                <img src="images/TicketPoster${doc.data().tNumber}.jpg" alt="Bootstrap Touch Slider" class="slide-image" height="200" width="150"/>
+                <img src="images/TicketPoster${doc.data().tName}.jpg" alt="Bootstrap Touch Slider" class="slide-image" height="200" width="150"/>
               </div>
               <div style=" float: left; width: 60%;">
                 <p class="user-box__uid">   티켓 번호 : ${doc.data().tNumber}</p>
@@ -113,7 +113,6 @@
         </div>`;
             document.querySelector('.myContent').insertAdjacentHTML('afterbegin', userTemplate);
 
-
             //const db = firebase.firestore();
             db.collection('ticket')
             $('#tpButton').click(function () {  //판매 버튼을 클릭한 결과
@@ -121,7 +120,7 @@
                 alert("가격을 입력해주세요.");
                 return false;
               }
-              if (doc.data().tCost < document.getElementById("price").value) { //가격이 원가보다 높으면 에러
+              if (doc.data().tCost < parseInt(document.getElementById("price").value)) { //가격이 원가보다 높으면 에러
                 alert("원가 이하 가격을 입력해주세요.");
                 return false;
               }
@@ -158,7 +157,7 @@
             const userTemplate = `
             <div style=" float: left; padding:3px;  width: 50%;">
               <div style=" float: left; text-align : center; width: 40%;">
-                <img src="images/TicketPoster${doc.data().tNumber}.jpg" alt="Bootstrap Touch Slider" class="slide-image" height="200" width="150"/>
+                <img src="images/TicketPoster${doc.data().tName}.jpg" alt="Bootstrap Touch Slider" class="slide-image" height="200" width="150"/>
               </div>
               <div style=" float: left; width: 60%;">
                 <p class="user-box__uid">   티켓 번호 : ${doc.data().tNumber}</p>
