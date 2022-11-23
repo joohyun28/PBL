@@ -83,7 +83,7 @@ module.exports = function (app)
     });
     // 로그인 페이지
     app.get('/', function(req, res){
-        goHtmlPage('./public/.html',req, res);
+        goHtmlPage('./public/login.html',req, res);
     });
 
 };
