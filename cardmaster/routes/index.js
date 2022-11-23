@@ -81,5 +81,9 @@ module.exports = function (app)
     app.get('/sales', function(req, res){
         goHtmlPage('./public/sales.html',req, res);
     });
+    // 회원가입 페이지
+    app.get('/register', function(req, res){
+        goHtmlPage('./public/register.html',req, res);
+    });
 
 };
