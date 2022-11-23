@@ -79,7 +79,7 @@
     $('#login').click(function () {  //로그인 버튼을 클릭한 결과
       firebase.auth().signInWithEmailAndPassword($('#id').val(), $('#password').val()).then((result) => {
         console.log(result)
-        window.location.href = 'index.html';
+        window.location.href = 'index';
       }).catch(function (error) {
         alert('로그인에 실패하였습니다');
       })
