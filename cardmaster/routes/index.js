@@ -69,4 +69,21 @@ module.exports = function (app)
         goHtmlPage('./public/721TokenWallet.html',req, res);
     });
 
+    // 메인(홈) 페이지
+    app.get('/index', function(req, res){
+        goHtmlPage('./public/index.html',req, res);
+    });
+    // 구매 페이지
+    app.get('/buy', function(req, res){
+        goHtmlPage('./public/buy.html',req, res);
+    });
+    // 판매 페이지
+    app.get('/sales', function(req, res){
+        goHtmlPage('./public/sales.html',req, res);
+    });
+    // 로그인 페이지
+    app.get('/', function(req, res){
+        goHtmlPage('./public/.html',req, res);
+    });
+
 };

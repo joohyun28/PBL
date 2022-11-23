@@ -37,7 +37,7 @@
 </body>
 
 <body>
-  <h2>로그인</h2>
+  <h2>회원가입</h2>
   <form method="post">
     <table>
       <tr>
@@ -48,9 +48,13 @@
         <td><label>비밀번호</label></td>
         <td><input type="password" name="password" id="password"></td>
       </tr>
+      <tr>
+        <td><label>비밀번호 확인</label></td>
+        <td><input type="password" name="passwordCheck" id="passwordCheck"></td>
+      </tr>
     </table>
-    <button type="button" id="login">로그인</button>
-    <button type="button" id="register">회원가입 페이지로 이동</button>
+    <button type="button" id="register">회원가입</button>
+    <button type="button" id="login">로그인 페이지로 이동</button>
   </form>
 
   <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
@@ -75,53 +79,47 @@
     firebase.initializeApp(firebaseConfig);
   </script>
   <script>
+    /*
+    //데이터 가져오기
     const db = firebase.firestore();
-    $('#login').click(function () {  //로그인 버튼을 클릭한 결과
-      firebase.auth().signInWithEmailAndPassword($('#id').val(), $('#password').val()).then((result) => {
-        console.log(result)
-        window.location.href = 'ticket.html';
-      }).catch(function (error) {
-        alert('로그인에 실패하였습니다');
-      })
-    });
-    $('#register').click(function () {  //회원가입 버튼을 클릭한 결과
-      window.location.href = 'register.html';
-    });
-
-    /*$('#login').click(function () {  //로그인 버튼을 클릭한 결과
-      //데이터 가져오기
-  const db = firebase.firestore();
-    db.collection('user').get().then((res)=>{
-      res.forEach((doc)=>{
-        //db에 존재하는 아이디일 경우
-        if ($('#id').val() == doc.data().id && $('#password').val() == doc.data().password ){
-          window.location.href = 'ticket.html'+$('#id').val();   //아이디값 전달
-        }
-        else{
-          console.log("로그인 실패")
-        }
-      })
+    db.collection('user').get().then((결과)=>{
+    console.log(결과)
   })*/
-      //아이디, 비번이 db에 저장되어 있는지 확인
-    /*if ($('#id').val() == doc.data().id && $('#password').val() == doc.data().password) {
-      var user = {
-        id: $('#id').val(),
-        name: $('#name').val(),
-        password: $('#password').val(),
-      }
-      window.location.href = 'login.html';
-      db.collection('user').doc($('#id').val()).set(user).then((result) => {
+
+    const db = firebase.firestore();
+    $('#register').click(function () {  //회원가입 버튼을 클릭한 결과
+      firebase.auth().createUserWithEmailAndPassword($('#id').val(), $('#password').val()).then((result) => {
         console.log(result);
-      }).catch((error) => {
-        console.log("error");
+        window.location.href = 'register.html';
+      }).catch(function (error) {
+        alert("회원가입에 실패하였습니다.");
       })
-    }
-    else {
-    //비밀번호 확인하라는 메시지 띄우기
-    alert("비밀번호를 확인해주세요");
- 
-  }
-  });*/
+    });
+    //비밀번호&비밀번호 확인 값 비교->같을 때 db에 추가되는 코드 추가하기
+
+    /*    $('#register').click(function () {  //회원가입 버튼을 클릭한 결과
+          if ($('#password').val() == $('#passwordCheck').val()) {
+            var user = {
+              id: $('#id').val(),
+              name: $('#name').val(),
+              password: $('#password').val(),
+            }
+            db.collection('user').doc($('#id').val()).set(user).then((result) => {
+              console.log(result);
+              window.location.href = 'login.html';
+            }).catch((error) => {
+              console.log("error");
+            })
+          }
+          else {
+          //비밀번호 확인하라는 메시지 띄우기
+          alert("비밀번호를 확인해주세요");
+        }
+        });*/
+
+    $('#login').click(function () {  //회원가입 버튼을 클릭한 결과
+      window.location.href = 'login.html';
+    });
 
 
   </script>
