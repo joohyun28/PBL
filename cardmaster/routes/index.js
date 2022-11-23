@@ -81,9 +81,5 @@ module.exports = function (app)
     app.get('/sales', function(req, res){
         goHtmlPage('./public/sales.html',req, res);
     });
-    // 로그인 페이지
-    app.get('/', function(req, res){
-        goHtmlPage('./public/login.html',req, res);
-    });
 
 };
