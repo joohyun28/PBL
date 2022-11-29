@@ -207,10 +207,6 @@
       </tr>
 
     </table>
-    <button type="button" id="ticket">티켓 예매하기</button>
-    <p></p>
-    <!--공백을 주기 위해 p태그 사용-->
-    <button type="button" id="logout">로그아웃</button><br>
   </form>
 
   <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
@@ -291,43 +287,6 @@
       }
     }
 
-
-    //티켓 예매
-    $('#ticket').click(function () {
-      //ticket 컬렉션에서 tNumber을 오름차순 정렬, 1개만 가져옴
-      db.collection('ticket')
-        .orderBy("tNumber", "asc").limit(1)
-        .where("uid", "==", "null")
-        .get().then((res) => {
-
-          res.forEach((doc) => {
-            ticketGet = 1;  //티켓 예매 가능 상태(예매 성공함)
-            console.log(doc.id)
-            console.log("티켓 예매 완료")
-            alert("예매 성공");
-
-            //티켓 정보 가져와서 소유자명 변경하기
-            db.collection('ticket').doc(doc.id).update({
-              "uid": userid,
-              "price": "null"
-            }).then(() => {
-              console.log("Document successfully updated!");
-            })
-              .catch((error) => {
-                // The document probably doesn't exist.
-                console.error("Error updating document: ", error);
-              });
-
-          })
-          if (ticketGet == 0) {  //예매 못함 ->매진
-            console.log("매진")
-            alert("매진");
-          }
-
-        });
-      ticketGet = 0;  //다시 예매를 시도할 수 있으니까 예매 못할 수도 있다는 가정
-
-    });
 
     var userid
     firebase.auth().onAuthStateChanged((user) => {
