@@ -32,7 +32,7 @@
                 </li>
                 <li><a href="buy.html">구매</a></li>
                 <li><a href="sales.html">판매</a></li>
-                <li><a href="login.html">로그인</a></li>
+                <li><a href="login" id="isLogin">로그인</a></li>
               </ul>
         </nav>
 
@@ -85,10 +85,21 @@
         //사용자 아이디 
         firebase.auth().onAuthStateChanged((user) => {
             if (user) {
+                $('#isLogin').text('로그아웃');
                 userid = user.uid; //사용자 아이디 가져옴
                 console.log(userid);
-            } else {
-
+                //로그아웃 클릭 시
+                $('#isLogin').click(function () {
+                    firebase.auth().signOut().then(function () {
+                        alert("로그아웃 되었습니다")
+                        //로그인 페이지로 이동시키고 세션 저장시키기
+                        window.location.href = "login.html"
+                    }).catch(function (error) {
+                        if (error) {
+                            alert("로그인 실패");
+                        }
+                    });
+                });
             }
         });
         var ticketGet = 0; //티켓 매진
