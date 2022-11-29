@@ -95,7 +95,10 @@
                         }
                     });
                 });
+      } else{
+        alert("로그인후 이용 가능합니다.");
       }
+
       const db = firebase.firestore();
       db.collection('ticket')
         .where('price', '==', 'null') //price가 null인 값. 판매되지 않은 티켓 가져오기
@@ -108,7 +111,7 @@
             const userTemplate = `
             <div style=" float: left; padding:3px;  width: 50%;">
               <div style=" float: left; text-align : center; width: 40%;">
-                <img src="./static/images/TicketPoster${doc.data().tName}.jpg" alt="Bootstrap Touch Slider" class="slide-image" height="200" width="150"/>
+                <input type="button" img src="./static/images/TicketPoster${doc.data().tName}.jpg" alt="Bootstrap Touch Slider" class="slide-image" height="200" width="150"/>
               </div>
               <div style=" float: left; width: 60%;">
                 <p class="user-box__uid">   티켓 번호 : ${doc.data().tNumber}</p>
