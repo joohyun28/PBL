@@ -30,7 +30,7 @@
         <li class="current"><a href="index">Home</a></li>
         <li><a href="buy">구매</a></li>
         <li><a href="sales">판매</a></li>
-        <li><a href="login">로그인</a></li>
+        <li><a href="login" id="isLogin">로그인</a></li>
       </ul>
     </nav>
     <!-- 추가부분 -->
@@ -271,7 +271,8 @@
 
                     //티켓 정보 가져와서 소유자명 변경하기
                     db.collection('ticket').doc(doc.id).update({
-                        "uid": userid
+                        "uid": userid,
+                        "price" : "null"
                     }).then(() => {
                         console.log("Document successfully updated!");
                     })
@@ -308,7 +309,8 @@
 
                     //티켓 정보 가져와서 소유자명 변경하기
                     db.collection('ticket').doc(doc.id).update({
-                        "uid": userid
+                        "uid": userid,
+                        "price" : "null"
                     }).then(() => {
                         console.log("Document successfully updated!");
                     })
@@ -327,6 +329,27 @@
         ticketGet = 0;  //다시 예매를 시도할 수 있으니까 예매 못할 수도 있다는 가정
 
     });
+
+    var userid
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+                $('#isLogin').text('로그아웃');
+                userid = user.uid; //사용자 아이디 가져옴
+                console.log(userid);
+                //로그아웃 클릭 시
+                $('#isLogin').click(function () {
+                    firebase.auth().signOut().then(function () {
+                        alert("로그아웃 되었습니다")
+                        //로그인 페이지로 이동시키고 세션 저장시키기
+                        window.location.href = "login.html"
+                    }).catch(function (error) {
+                        if (error) {
+                            alert("로그인 실패");
+                        }
+                    });
+                });
+            }
+        });
 
 </script>
 
