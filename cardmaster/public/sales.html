@@ -111,7 +111,7 @@
             const userTemplate = `
             <div style=" float: left; padding:3px;  width: 50%;">
               <div style=" float: left; text-align : center; width: 40%;">
-                <input type="button" img src="./static/images/TicketPoster${doc.data().tName}.jpg" alt="Bootstrap Touch Slider" class="slide-image" height="200" width="150"/>
+                <img src="./static/images/TicketPoster${doc.data().tName}.jpg" alt="Bootstrap Touch Slider" class="button-image" height="200" width="150" id="${doc.data().tName}"/>
               </div>
               <div style=" float: left; width: 60%;">
                 <p class="user-box__uid">   티켓 번호 : ${doc.data().tNumber}</p>
@@ -142,6 +142,11 @@
                   return
 
                 }
+              
+              //poster image 클릭 시 티켓정보 출력
+              id
+
+            
               //ticketDB에 tPrice 값 추가
               db.collection('ticket').doc(doc.id).update({
                 price: $('#price').val()
