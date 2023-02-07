@@ -15,42 +15,9 @@
     <script src="./static/libs/commonUtil.js"></script>
 
     <script>
-        const CrowdSaleAddr = "0xD7ACd2a9FD159E69Bb102A1ca21C9a3e3A5F771B";
-        const ItemTokenAddr = "0x8b4ece03a7499119fcf908d4e3525aa5e3356897";
+        const CrowdSaleAddr = "0x6bbd0f6411441af1daad24fdd18379a5ff089603";
+        const ItemTokenAddr = "0x0a01064e1B61db1986dCC3Ee536eBf7E9E25D426";
         const TokenABI = [
-    {
-        "constant": true,
-        "inputs": [],
-        "name": "totalSupply",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "constant": true,
-        "inputs": [
-            {
-                "name": "_owner",
-                "type": "address"
-            }
-        ],
-        "name": "balanceOf",
-        "outputs": [
-            {
-                "name": "balance",
-                "type": "uint256"
-            }
-        ],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
-    },
     {
         "constant": false,
         "inputs": [
@@ -95,6 +62,39 @@
         ],
         "name": "Transfer",
         "type": "event"
+    },
+    {
+        "constant": true,
+        "inputs": [
+            {
+                "name": "_owner",
+                "type": "address"
+            }
+        ],
+        "name": "balanceOf",
+        "outputs": [
+            {
+                "name": "balance",
+                "type": "uint256"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "totalSupply",
+        "outputs": [
+            {
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
     }
 ];
         const CrowdSaleABI = [
@@ -401,7 +401,7 @@
     </script>
 </head>
 <body>
-<h2> 티켓 토큰 지갑</h2>
+<h2>토큰 거래 페이지</h2>
     <div>
         내 계정 : <text id="account"></text>
     </div>
@@ -416,12 +416,12 @@
 <hr/>
 <h2> 토큰 선물 하기 </h2>
     수신자 : <input type="string" id="recipent" size="80" /><br/>
-    전송 토큰 : <input type="string" id="tokenValue" /> Token
+    전송 토큰 : <input type="string" id="tokenValue" />Token
     <select class="currencyUnitSelector" name="GT" class="currencyUnitSelector" id="transfer_unit"></select>
     <button type="button" onClick="callTransfer();">전송하기</button>
 <hr/>
 <h2> 토큰 구매 하기 (판매 가능 토큰 : <span id="availableSaleToken" style="color:blue;"></span>) </h2>
-    이더 지출 금 : <input type="string" value="0" onkeyup="calculateToken()" id="buyTokens" /> wei * <input type="string" readonly id="rate" /> 비율 (구입 토큰 수량 <span style="color: blue" id="expectedGT"></span> Token) 배율 <br/>
+    이더 지출 금 : <input type="string" value="0" onkeyup="calculateToken()" id="buyTokens" /> wei * <input type="string" readonly id="rate" /> 비율 (구입 토큰 수량 <span style="color: blue" id="expectedGT"></span>Token) 배율 <br/>
     <button type="button" onClick="buyTokens();">구매하기</button>
 <hr/>
     로그 : <div id="result" />
