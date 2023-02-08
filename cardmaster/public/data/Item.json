@@ -3,12 +3,12 @@
     "tokenSeq" : 0,
     "name" : "SHIRLEY LANE ROCK`N ROLL FESTIVAL",
     "itemType" : "FESTIVAL",
-    "img" : "/static/imgs/ticket/ticket1.png"
+    "img" : "/static/imgs/weapon/ticket1.png"
   },{
       "tokenSeq" : 1,
       "name" : "LIVE THE MUSIC FESTIVAL",
       "itemType" : "FESTIVAL",
       
-    "img" : "/static/imgs/ticket/ticket2.png"
+    "img" : "/static/imgs/weapon/ticket2.png"
   }]
 }
