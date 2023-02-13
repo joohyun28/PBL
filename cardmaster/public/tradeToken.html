@@ -15,8 +15,8 @@
     <script src="./static/libs/commonUtil.js"></script>
 
     <script>
-        const CrowdSaleAddr = "0x6bbd0f6411441af1daad24fdd18379a5ff089603";
-        const ItemTokenAddr = "0x0a01064e1B61db1986dCC3Ee536eBf7E9E25D426";
+        const CrowdSaleAddr = "0x13D0F1196BA7D94aC9FD1324a715E559E2e99665";
+        const ItemTokenAddr = "0x0ABD2Cb2667fDfaa59e3bad810BFcac40C055983";
         const TokenABI = [
     {
         "constant": false,
@@ -258,8 +258,8 @@
         $(document).ready(() => {
              console.log(window.web3);
              if (typeof window.web3 !== "undefined") {
-             	web3js = new Web3(window.web3.currentProvider);
-             	console.log("Connect to Mist/MetaMask");
+                web3js = new Web3(window.web3.currentProvider);
+                console.log("Connect to Mist/MetaMask");
              } else {
                  window.alert("MetaMask 접속이 안되어있습니다!");
                  window.location = "./login";
@@ -338,7 +338,7 @@
                 value: tokenAmount,
                 gasPrice : BigNumber($("#gas_price").val()).multipliedBy(500000000)
             }, (error, result) => {
-                var txURl = "https://ropsten.etherscan.io/tx/" + result;
+                var txURl = "https://goerli.etherscan.io/tx/" + result;
                 txLog({
                     targetEl : "result",
                     msg : tokenAmount + " GameToken 구매를 위해 " + tokenAmount.toFixed() + " Wei 전송 완료 [<a target=\"_blank\" href=\""+txURl+"\">"+result+"</a>]"
@@ -391,7 +391,7 @@
         function currencyOptionDraw() {
             for( var i = 0; i <= 6; i++ ){
                 $(".currencyUnitSelector").append(function(){
-                    return	$('<option>', {
+                    return   $('<option>', {
                         value : 1 * Math.pow(10,i*3),
                         text : i == 0? $(this).attr("name") :"10^" + (i*3) + " " + $(".currencyUnitSelector")[0].name
                     });

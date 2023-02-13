@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>ë§ˆì¼“í”Œë ˆì´ìŠ¤</title>
+    <title>¸¶ÄÏÇÃ·¹ÀÌ½º</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
 
@@ -19,9 +19,9 @@
     <script src="./static/libs/commonUtil.js"></script>
 
     <script>
-        // ê±°ë˜, í† í°, ì¹´ë“œìƒì„±
-        const ItemTradingAddr = "0xD7ACd2a9FD159E69Bb102A1ca21C9a3e3A5F771B";
-        const ItemTokenAddr = "0x0a01064e1B61db1986dCC3Ee536eBf7E9E25D426";
+        // °Å·¡, ÅäÅ«, Ä«µå»ı¼º
+        const ItemTradingAddr = "0x61a145B3b1C3077b95107761d9977e935c714D41";
+        const ItemTokenAddr = "0x0ABD2Cb2667fDfaa59e3bad810BFcac40C055983";
         const ITemFactoryAddr = "0xF63DF44e39F4D67a1027f91467b31AC665FE82cD";
         const ITemFactoryABI = [
     {
@@ -700,7 +700,7 @@
 
         $(document).ready(()=>{
 
-            //ë¡œê·¸ì¸ ìƒíƒœì²´í¬
+            //·Î±×ÀÎ »óÅÂÃ¼Å©
             loginStatus().then((result) => {
                 if(result.status !== "connected") {
                     window.location = "./login";
@@ -714,17 +714,17 @@
             GameToken = web3js.eth.contract(TokenABI).at(ItemTokenAddr);
             ItemTrading = web3js.eth.contract(ItemTradingABI).at(ItemTradingAddr);
 
-            // Account ì •ë³´ ê°€ì ¸ì˜¤ê¸°
+            // Account Á¤º¸ °¡Á®¿À±â
             web3js.eth.getAccounts(function (error, result) {
                 if (result.length) {
                     console.log(result);
                     account = result[0];
                     $("#account").text(result[0]);
 
-                    // Game Token ë³´ìœ í˜„í™©
+                    // Game Token º¸À¯ÇöÈ²
                     balanceOf();
 
-                    // íŒë§¤ ì¹´ë“œ ë¦¬ìŠ¤íŠ¸
+                    // ÆÇ¸Å Ä«µå ¸®½ºÆ®
                     cardList();
 
                     GasPrice = getGasPrice();
@@ -743,7 +743,7 @@
 
         function balanceOf() {
             GameToken.balanceOf(account, function (error, result) {
-                if (errorChk("Token balanceOf í˜¸ì¶œ ì‹¤íŒ¨", error)) return;
+                if (errorChk("Token balanceOf È£Ãâ ½ÇÆĞ", error)) return;
 
                 var gameToken = BigNumber(result);
 
@@ -751,7 +751,7 @@
             });
         }
 
-        // íŒë§¤ ì¹´ë“œ ë¦¬ìŠ¤íŠ¸
+        // ÆÇ¸Å Ä«µå ¸®½ºÆ®
         function cardList() {
 
             $("#marketItems").empty();
@@ -760,7 +760,7 @@
 
                 let myBalance;
 
-                if (errorChk("balanceOf í˜¸ì¶œ ì‹¤íŒ¨", error)) {
+                if (errorChk("balanceOf È£Ãâ ½ÇÆĞ", error)) {
                     myBalance = 0;
                     return;
                 }
@@ -769,7 +769,7 @@
 
                 for (var i = 0; i < myBalance; i++) {
                     ItemFactory.tokenByIndex(i, (error, result) => {
-                        if (errorChk("tokenByIndex í˜¸ì¶œ ì‹¤íŒ¨", error)) return;
+                        if (errorChk("tokenByIndex È£Ãâ ½ÇÆĞ", error)) return;
 
                         let getAssetMetaInfo = new Promise((resolve, reject) => {
                             resolve($.ajax("./api/items/" + result));
@@ -802,7 +802,7 @@
             });
         }
 
-        // Selling Item Card DOM ê·¸ë¦¬ê¸°
+        // Selling Item Card DOM ±×¸®±â
         function sellingItem(_opt, _tokenSeq) {
 
             let element = "<div class=\"col-md-3 col-sm-6\">";
@@ -812,11 +812,11 @@
                 element +=      "</div>";
                 element +=      "<div class=\"team-content\">";
                 element +=        "<h3>"+_opt.data.name+"</h3>";
-                element +=        "<span class=\"post\"> [íŒë§¤ì] "+(_opt.data.owner === account ? "ë‚˜":_opt.data.owner)+"</span>";
-                element +=        "<span class=\"post\"> ê°€ê²© : <span style=\"color:blue;\">"+_opt.extInfo[1]+"</span> GTK </span>";
+                element +=        "<span class=\"post\"> [ÆÇ¸ÅÀÚ] "+(_opt.data.owner === account ? "³ª":_opt.data.owner)+"</span>";
+                element +=        "<span class=\"post\"> °¡°İ : <span style=\"color:blue;\">"+_opt.extInfo[1]+"</span> GTK </span>";
                 element +=      "</div>";
                 element +=      "<ul class=\"social\">";
-                element +=      "<li><a href=\"#\" onclick=\"purchaseItem('"+_opt.extInfo[1]+"','"+_tokenSeq+"')\">êµ¬ë§¤í•˜ê¸°</a></li>";
+                element +=      "<li><a href=\"#\" onclick=\"purchaseItem('"+_opt.extInfo[1]+"','"+_tokenSeq+"')\">±¸¸ÅÇÏ±â</a></li>";
                 element +=      "</ul>";
                 element +=  "</div>";
                 element += "</div>";
@@ -824,15 +824,15 @@
             return element;
         }
 
-        // ì¹´ë“œ êµ¬ë§¤
+        // Ä«µå ±¸¸Å
         function purchaseItem(_price, _tokenSeq) {
 
-            console.log("Gas ì‹œì„¸ >> ", $("#gas_price").val());
+            console.log("Gas ½Ã¼¼ >> ", $("#gas_price").val());
 
             let myToken = Number($("#balanceOfToken").text());
             console.log(_price);
             if(myToken < _price) {
-                alert("GTK ê°€ ë¶€ì¡±í•©ë‹ˆë‹¤!");
+                alert("GTK °¡ ºÎÁ·ÇÕ´Ï´Ù!");
                 return;
             }
 
@@ -846,7 +846,7 @@
                 function(error, result) {
 
                     if(!error) {
-                        console.log(" buyCard ì‹¤í–‰ >> ",result);
+                        console.log(" buyCard ½ÇÇà >> ",result);
                     } else
                         console.log(error);
 
@@ -862,8 +862,8 @@
 
         <div class="row">
             <div class="col-md-12 text-center">
-                <h1>í‹°ì¼“ ê±°ë˜ í˜ì´ì§€</h1>
-                <h5 class="text-right">í˜„ì¬ ë³´ìœ  : <span id="balanceOfToken"></span> GTK</h5>
+                <h1>Æ¼ÄÏ °Å·¡ ÆäÀÌÁö</h1>
+                <h5 class="text-right">ÇöÀç º¸À¯ : <span id="balanceOfToken"></span> GTK</h5>
             </div>
         </div>
         <div class="row" id="marketItems">
