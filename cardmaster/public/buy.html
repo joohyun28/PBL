@@ -510,7 +510,7 @@
                 <p class="user-box__uid">   예매자명 : ${doc.data().uid}</p>
                 <p class="user-box__tCost">   판매 가격 : ${doc.data().price}</p>
                 <button type="button" id="sBtn">구매</button>
-                <button type="button" onClick="isTransfered();">구매 확정</button>
+                <button type="button" id="btnCheck">구매 확정</button>
             </div>
         </div>`;
 
@@ -528,6 +528,7 @@
                             }
                             $('#btnCheck').click(function () {
                                 console.log("터치됨");
+                                isTransfered()
                                 //console.log("결과 확인 ",isTransfered());
                                 if (isTrans) { //db 수정
                                     // 티켓DB에서 아이디 변경 (판매자 → 구매자)
