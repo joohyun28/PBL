@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>토큰교환</title>
@@ -18,252 +19,252 @@
         const CrowdSaleAddr = "0x13D0F1196BA7D94aC9FD1324a715E559E2e99665";
         const ItemTokenAddr = "0x0ABD2Cb2667fDfaa59e3bad810BFcac40C055983";
         const TokenABI = [
-    {
-        "constant": false,
-        "inputs": [
             {
-                "name": "_to",
-                "type": "address"
+                "constant": false,
+                "inputs": [
+                    {
+                        "name": "_to",
+                        "type": "address"
+                    },
+                    {
+                        "name": "_value",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "transfer",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "bool"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
             },
             {
-                "name": "_value",
-                "type": "uint256"
-            }
-        ],
-        "name": "transfer",
-        "outputs": [
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "payable": false,
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": true,
-                "name": "from",
-                "type": "address"
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": true,
+                        "name": "from",
+                        "type": "address"
+                    },
+                    {
+                        "indexed": true,
+                        "name": "to",
+                        "type": "address"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "value",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "Transfer",
+                "type": "event"
             },
             {
-                "indexed": true,
-                "name": "to",
-                "type": "address"
+                "constant": true,
+                "inputs": [
+                    {
+                        "name": "_owner",
+                        "type": "address"
+                    }
+                ],
+                "name": "balanceOf",
+                "outputs": [
+                    {
+                        "name": "balance",
+                        "type": "uint256"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
             },
             {
-                "indexed": false,
-                "name": "value",
-                "type": "uint256"
+                "constant": true,
+                "inputs": [],
+                "name": "totalSupply",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "uint256"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
             }
-        ],
-        "name": "Transfer",
-        "type": "event"
-    },
-    {
-        "constant": true,
-        "inputs": [
-            {
-                "name": "_owner",
-                "type": "address"
-            }
-        ],
-        "name": "balanceOf",
-        "outputs": [
-            {
-                "name": "balance",
-                "type": "uint256"
-            }
-        ],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "constant": true,
-        "inputs": [],
-        "name": "totalSupply",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
-    }
-];
+        ];
         const CrowdSaleABI = [
-    {
-        "constant": true,
-        "inputs": [],
-        "name": "rate",
-        "outputs": [
             {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "constant": true,
-        "inputs": [],
-        "name": "weiRaised",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "constant": true,
-        "inputs": [],
-        "name": "wallet",
-        "outputs": [
-            {
-                "name": "",
-                "type": "address"
-            }
-        ],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "constant": true,
-        "inputs": [],
-        "name": "remainingTokens",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "constant": true,
-        "inputs": [],
-        "name": "tokenWallet",
-        "outputs": [
-            {
-                "name": "",
-                "type": "address"
-            }
-        ],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "constant": false,
-        "inputs": [
-            {
-                "name": "_beneficiary",
-                "type": "address"
-            }
-        ],
-        "name": "buyTokens",
-        "outputs": [],
-        "payable": true,
-        "stateMutability": "payable",
-        "type": "function"
-    },
-    {
-        "constant": true,
-        "inputs": [],
-        "name": "token",
-        "outputs": [
-            {
-                "name": "",
-                "type": "address"
-            }
-        ],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_rate",
-                "type": "uint256"
+                "constant": true,
+                "inputs": [],
+                "name": "rate",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "uint256"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
             },
             {
-                "name": "_wallet",
-                "type": "address"
+                "constant": true,
+                "inputs": [],
+                "name": "weiRaised",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "uint256"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
             },
             {
-                "name": "_token",
-                "type": "address"
+                "constant": true,
+                "inputs": [],
+                "name": "wallet",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "address"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
             },
             {
-                "name": "_tokenWallet",
-                "type": "address"
+                "constant": true,
+                "inputs": [],
+                "name": "remainingTokens",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "uint256"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": true,
+                "inputs": [],
+                "name": "tokenWallet",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "address"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [
+                    {
+                        "name": "_beneficiary",
+                        "type": "address"
+                    }
+                ],
+                "name": "buyTokens",
+                "outputs": [],
+                "payable": true,
+                "stateMutability": "payable",
+                "type": "function"
+            },
+            {
+                "constant": true,
+                "inputs": [],
+                "name": "token",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "address"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "inputs": [
+                    {
+                        "name": "_rate",
+                        "type": "uint256"
+                    },
+                    {
+                        "name": "_wallet",
+                        "type": "address"
+                    },
+                    {
+                        "name": "_token",
+                        "type": "address"
+                    },
+                    {
+                        "name": "_tokenWallet",
+                        "type": "address"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "constructor"
+            },
+            {
+                "payable": true,
+                "stateMutability": "payable",
+                "type": "fallback"
+            },
+            {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": true,
+                        "name": "purchaser",
+                        "type": "address"
+                    },
+                    {
+                        "indexed": true,
+                        "name": "beneficiary",
+                        "type": "address"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "value",
+                        "type": "uint256"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "amount",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "TokenPurchase",
+                "type": "event"
             }
-        ],
-        "payable": false,
-        "stateMutability": "nonpayable",
-        "type": "constructor"
-    },
-    {
-        "payable": true,
-        "stateMutability": "payable",
-        "type": "fallback"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": true,
-                "name": "purchaser",
-                "type": "address"
-            },
-            {
-                "indexed": true,
-                "name": "beneficiary",
-                "type": "address"
-            },
-            {
-                "indexed": false,
-                "name": "value",
-                "type": "uint256"
-            },
-            {
-                "indexed": false,
-                "name": "amount",
-                "type": "uint256"
-            }
-        ],
-        "name": "TokenPurchase",
-        "type": "event"
-    }
-];
+        ];
 
         let account, GameToken, CrowdSale, GasPrice;
 
         $(document).ready(() => {
-             console.log(window.web3);
-             if (typeof window.web3 !== "undefined") {
+            console.log(window.web3);
+            if (typeof window.web3 !== "undefined") {
                 web3js = new Web3(window.web3.currentProvider);
                 console.log("Connect to Mist/MetaMask");
-             } else {
-                 window.alert("MetaMask 접속이 안되어있습니다!");
-                 window.location = "./login";
-             }
+            } else {
+                window.alert("MetaMask 접속이 안되어있습니다!");
+                window.location = "./login";
+            }
 
             GameToken = web3js.eth.contract(TokenABI).at(ItemTokenAddr);
             CrowdSale = web3js.eth.contract(CrowdSaleABI).at(CrowdSaleAddr);
@@ -288,9 +289,9 @@
 
         function getGasPrice() {
             return new Promise((resolve, reject) => {
-                 $.getJSON('https://ethgasstation.info/json/ethgasAPI.json', (data) => {
-                     resolve(data['safeLow']/10);
-                 });
+                $.getJSON('https://ethgasstation.info/json/ethgasAPI.json', (data) => {
+                    resolve(data['safeLow'] / 10);
+                });
             });
         }
 
@@ -336,22 +337,69 @@
                 from: account,
                 to: CrowdSaleAddr,
                 value: tokenAmount,
-                gasPrice : BigNumber($("#gas_price").val()).multipliedBy(500000000)
+                gasPrice: BigNumber($("#gas_price").val()).multipliedBy(500000000)
             }, (error, result) => {
                 var txURl = "https://goerli.etherscan.io/tx/" + result;
                 txLog({
-                    targetEl : "result",
-                    msg : tokenAmount + " GameToken 구매를 위해 " + tokenAmount.toFixed() + " Wei 전송 완료 [<a target=\"_blank\" href=\""+txURl+"\">"+result+"</a>]"
+                    targetEl: "result",
+                    msg: tokenAmount + " GameToken 구매를 위해 " + tokenAmount.toFixed() + " Wei 전송 완료 [<a target=\"_blank\" href=\"" + txURl + "\">" + result + "</a>]"
                 });
                 balanceOf();
                 $("#buyTokens").val(0);
             })
         }
 
+        function sleep(ms) {
+            const wakeUpTime = Date.now() + ms;
+            while (Date.now() < wakeUpTime) {}
+        }
+
+        let res; 
+
+        function isTransfered() {
+            //let txId = $('#txID').val();
+            //var res = callTransfer();
+            console.log("전달은 된다",res);  
+            //var res = "0x58b4ef639eb51866d5c04d3d9928347f12340666480ed90b4227c4f59b9e150f"
+            //console.log("결과값 전달"+res); 
+            console.log(typeof(txId));
+            //아직 tx가 생성되는 중이어서 result에 값이 안들어가는듯?
+            //sleep(30000);  //30초 기다림 (이 줄 실행하고 다음 줄 실행하도록 sleep 함수 생성)
+            web3js.eth.getTransactionReceipt(res, function(error, result){
+                if(!error){
+                    console.log(JSON.stringify(result));
+                    console.log(result.status);   //상태 출력
+
+                    //status가 0x1이면 uid 변경 코드 추가하기
+                    if(result.status == "0x1"){
+                        //db 수정
+
+                        //새로고침 코드를 추가하여 uid가 정상적으로 바뀌었을 떄 res 값을 초기화 
+                        //->res에 txid가 저장되어 있지 않기 때문에 다시 구매확정 버튼을 눌러도 uid가 수정되지 않음.  
+                    }
+                }
+                else
+                    console.error(error);
+            })
+
+            /*if (callTransfer()) {
+                
+                //보내기 성공하였을 경우인지 확인
+                console.log("보내기 성공");
+                //티켓 소유자 변경
+            }*/
+        }
+
+        function recentTxId(){  //최근 생성한 txid를 확인할 수 있게 함수 하나 생성
+            console.log(res);
+        }
+
         function callTransfer() {
             let recipent = $('#recipent').val();
 
             let transferValue = BigNumber($("#tokenValue").val());
+
+            //var res;
 
             if (transferValue.isLessThan(0)) {
                 alert("0보다 큰값을 입력해 주세요!");
@@ -372,16 +420,39 @@
                     gasPrice: BigNumber($("#gas_price").val()).multipliedBy(500000000)
                 },
                 (error, result) => {
-                    if(errorChk("transfer(transaction) 실패", error)) return;
-                    console.log(result);
-                    var txURl = "https://ropsten.etherscan.io/tx/" + result;
+                    if (errorChk("transfer(transaction) 실패", error)) return false;
+                    console.log("여기", result);
+                    res = result;
+                    var txURl = "https://goerli.etherscan.io/tx/" + result;
                     txLog({
-                        targetEl : "result",
-                        msg : account + " 에게 " + transferValue.toFixed() + " GT 전송 완료 [<a target=\"_blank\" href=\""+txURl+"\">"+result+"</a>]"
+                        targetEl: "result",
+                        msg: account + " 에게 " + transferValue.toFixed() + " GT 전송 완료 [<a target=\"_blank\" href=\"" + txURl + "\">" + result + "</a>]"
                     })
+                    //return result;
+                    //isTransfered(result);
                 }
             );
-
+            //0x415f7c4cd055b2ae8ddfe3cd457a847226bcfb5ba3507f8064714c47c10291d8
+            //return res;  //생성된 tx가 전달되지 않음. (먼저 이게 수행되고 sendTransaction의 함수는 메타마스크에서 확인버튼 눌렀을 떄 생성되는게 문제)
+            //const txcheck = web3js.eth.getTransactionReceipt(res);
+            //console.log(txcheck);
+            /*var txcheck = web3js.eth.getTransactionReceipt("0x58b4ef639eb51866d5c04d3d9928347f12340666480ed90b4227c4f59b9e150f", function(error, result){
+                if(!error){
+                    console.log(JSON.stringify(result));
+                    console.log(result.status);   //상태 출력
+                }
+                else
+                    console.error(error);
+            })
+            //console.log(web3js.eth.getTransaction(res).then(console.log))
+            /*console.log("res로 잘 들어옴",res);
+            //console.log(web3js.eth.getTransaction(res)['status'])
+            const isTransactionMined = async (res) => {
+                const txReceipt = await provider.getTransactionReceipt(res);
+                if (txReceipt && txReceipt.blockNumber) {
+                    return txReceipt;
+                }
+            }*/
         }
 
         function calculateToken() {
@@ -389,19 +460,20 @@
         }
 
         function currencyOptionDraw() {
-            for( var i = 0; i <= 6; i++ ){
-                $(".currencyUnitSelector").append(function(){
-                    return   $('<option>', {
-                        value : 1 * Math.pow(10,i*3),
-                        text : i == 0? $(this).attr("name") :"10^" + (i*3) + " " + $(".currencyUnitSelector")[0].name
+            for (var i = 0; i <= 6; i++) {
+                $(".currencyUnitSelector").append(function () {
+                    return $('<option>', {
+                        value: 1 * Math.pow(10, i * 3),
+                        text: i == 0 ? $(this).attr("name") : "10^" + (i * 3) + " " + $(".currencyUnitSelector")[0].name
                     });
                 });
             }
         }
     </script>
 </head>
+
 <body>
-<h2>토큰 거래 페이지</h2>
+    <h2>토큰 거래 페이지</h2>
     <div>
         내 계정 : <text id="account"></text>
     </div>
@@ -411,19 +483,29 @@
     <div id="ether">
         보유 토큰 : <text id="balanceOfToken"></text>
     </div>
-<hr/>
+    <hr />
     시장의 현재 Gas Price : <input type="string" id="gas_price" readonly />
-<hr/>
-<h2> 토큰 선물 하기 </h2>
-    수신자 : <input type="string" id="recipent" size="80" /><br/>
+    <hr />
+    <h2> 토큰 선물 하기 </h2>
+    수신자 : <input type="string" id="recipent" size="80" /><br />
     전송 토큰 : <input type="string" id="tokenValue" />Token
     <select class="currencyUnitSelector" name="GT" class="currencyUnitSelector" id="transfer_unit"></select>
     <button type="button" onClick="callTransfer();">전송하기</button>
-<hr/>
-<h2> 토큰 구매 하기 (판매 가능 토큰 : <span id="availableSaleToken" style="color:blue;"></span>) </h2>
-    이더 지출 금 : <input type="string" value="0" onkeyup="calculateToken()" id="buyTokens" /> wei * <input type="string" readonly id="rate" /> 비율 (구입 토큰 수량 <span style="color: blue" id="expectedGT"></span>Token) 배율 <br/>
+    <hr />
+    <h2> 토큰 구매 하기 (판매 가능 토큰 : <span id="availableSaleToken" style="color:blue;"></span>) </h2>
+    이더 지출 금 : <input type="string" value="0" onkeyup="calculateToken()" id="buyTokens" /> wei * <input type="string"
+        readonly id="rate" /> 비율 (구입 토큰 수량 <span style="color: blue" id="expectedGT"></span>Token) 배율 <br />
     <button type="button" onClick="buyTokens();">구매하기</button>
-<hr/>
-    로그 : <div id="result" />
+    <hr />
+    <button type="button" onClick="recentTxId();">최근 txID 확인</button>
+    <hr />
+    트랜잭션 : <input type="string" id="txID" />
+    <button type="button" onClick="isTransfered();">트랜잭션 확인</button>
+    <hr />
+
+    로그 :
+    <div id="result" />
+    
 </body>
+
 </html>

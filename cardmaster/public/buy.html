@@ -34,6 +34,10 @@
             </ul>
         </nav>
 
+        <div id="ether">
+            보유 토큰 : <text id="balanceOfToken"></text>
+        </div>
+
     </div>
 </body>
 
@@ -51,6 +55,13 @@
     <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-storage.js"></script>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bignumber.js/bignumber.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lodash@4.17.10/lodash.min.js"></script>
+    <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+    <script src="./static/libs/commonUtil.js"></script>
+
     <script>
         var firebaseConfig = {
             apiKey: "AIzaSyDYu8NfIoLK2iQj-3PTmcYRGmqS5B3f4Uo",
@@ -67,10 +78,400 @@
         firebase.initializeApp(firebaseConfig);
     </script>
 
-
     <script>
+        const CrowdSaleAddr = "0x13D0F1196BA7D94aC9FD1324a715E559E2e99665";
+        const ItemTokenAddr = "0x0ABD2Cb2667fDfaa59e3bad810BFcac40C055983";
+        const TokenABI = [
+            {
+                "constant": false,
+                "inputs": [
+                    {
+                        "name": "_to",
+                        "type": "address"
+                    },
+                    {
+                        "name": "_value",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "transfer",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "bool"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": true,
+                        "name": "from",
+                        "type": "address"
+                    },
+                    {
+                        "indexed": true,
+                        "name": "to",
+                        "type": "address"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "value",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "Transfer",
+                "type": "event"
+            },
+            {
+                "constant": true,
+                "inputs": [
+                    {
+                        "name": "_owner",
+                        "type": "address"
+                    }
+                ],
+                "name": "balanceOf",
+                "outputs": [
+                    {
+                        "name": "balance",
+                        "type": "uint256"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": true,
+                "inputs": [],
+                "name": "totalSupply",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "uint256"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            }
+        ];
+        const CrowdSaleABI = [
+            {
+                "constant": true,
+                "inputs": [],
+                "name": "rate",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "uint256"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": true,
+                "inputs": [],
+                "name": "weiRaised",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "uint256"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": true,
+                "inputs": [],
+                "name": "wallet",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "address"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": true,
+                "inputs": [],
+                "name": "remainingTokens",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "uint256"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": true,
+                "inputs": [],
+                "name": "tokenWallet",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "address"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [
+                    {
+                        "name": "_beneficiary",
+                        "type": "address"
+                    }
+                ],
+                "name": "buyTokens",
+                "outputs": [],
+                "payable": true,
+                "stateMutability": "payable",
+                "type": "function"
+            },
+            {
+                "constant": true,
+                "inputs": [],
+                "name": "token",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "address"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "inputs": [
+                    {
+                        "name": "_rate",
+                        "type": "uint256"
+                    },
+                    {
+                        "name": "_wallet",
+                        "type": "address"
+                    },
+                    {
+                        "name": "_token",
+                        "type": "address"
+                    },
+                    {
+                        "name": "_tokenWallet",
+                        "type": "address"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "constructor"
+            },
+            {
+                "payable": true,
+                "stateMutability": "payable",
+                "type": "fallback"
+            },
+            {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": true,
+                        "name": "purchaser",
+                        "type": "address"
+                    },
+                    {
+                        "indexed": true,
+                        "name": "beneficiary",
+                        "type": "address"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "value",
+                        "type": "uint256"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "amount",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "TokenPurchase",
+                "type": "event"
+            }
+        ];
 
-        var userid
+        let account, GameToken, CrowdSale, GasPrice;
+
+        $(document).ready(() => {
+            console.log(window.web3);
+            if (typeof window.web3 !== "undefined") {
+                web3js = new Web3(window.web3.currentProvider);
+                console.log("Connect to Mist/MetaMask");
+            } else {
+                window.alert("MetaMask 접속이 안되어있습니다!");
+                window.location = "./login";
+            }
+
+            GameToken = web3js.eth.contract(TokenABI).at(ItemTokenAddr);
+            CrowdSale = web3js.eth.contract(CrowdSaleABI).at(CrowdSaleAddr);
+
+            web3js.eth.getAccounts(function (error, result) {
+                if (result.length) {
+                    console.log(result);
+                    account = result[0];
+                    $("#account").text(result[0]);
+
+                    balanceOf();
+                } else {
+                    window.alert("접속된 계정이 없습니다!");
+                    window.location = "./login";
+                }
+            });
+
+            //currencyOptionDraw();
+            GasPrice = getGasPrice();
+        });
+
+
+        function getGasPrice() {
+            return new Promise((resolve, reject) => {
+                $.getJSON('https://ethgasstation.info/json/ethgasAPI.json', (data) => {
+                    resolve(data['safeLow'] / 10);
+                });
+            });
+        }
+
+        function balanceOf() {
+            web3js.eth.getBalance(account, (error, result) => {
+                if (errorChk("getBalance 호출 실패", error)) return;
+
+                var myEther = BigNumber(result);
+                if (myEther.isLessThan(1000000000000000))
+                    var etherMessage = " (경고 : 이더 부족으로 실행하지 못할 수도 있습니다.)"
+                else
+                    etherMessage = "";
+
+                $("#balanceOf").text(myEther.toFixed() + " wei" + etherMessage);
+            });
+            GameToken.balanceOf(account, (error, result) => {
+                if (errorChk("Token balanceOf 호출 실패", error)) return;
+
+                $("#balanceOfToken").text(BigNumber(result).toFixed() + "Token");
+            });
+            GameToken.balanceOf(CrowdSaleAddr, (error, result) => {
+                if (errorChk("CrowdSale Token balanceOf 호출 실패", error)) return;
+
+                $("#availableSaleToken").text(BigNumber(result).toFixed() + "Token");
+            });
+
+            CrowdSale.rate((error, result) => {
+                if (errorChk("CrowdSale Token rate 호출 실패", error)) return;
+                console.log(result);
+                $("#rate").val(BigNumber(result).toFixed());
+            });
+
+            GasPrice.then((data) => { "14.3" });
+        }
+
+        var userid, meta;
+    
+        //판매중인 티켓 리스트 나열 
+        //데이터 가져오기
+
+        let res;
+        var isTrans = false;
+
+        let isTransfered = async function() {
+            //let txId = $('#txID').val();
+            //var res = callTransfer();
+            if (res) {
+                console.log("전달은 된다", res);
+                //var res = "0x58b4ef639eb51866d5c04d3d9928347f12340666480ed90b4227c4f59b9e150f"
+                //console.log("결과값 전달"+res); 
+                //console.log(typeof (txId));
+                //아직 tx가 생성되는 중이어서 result에 값이 안들어가는듯?
+                //sleep(30000);  //30초 기다림 (이 줄 실행하고 다음 줄 실행하도록 sleep 함수 생성)
+                await web3js.eth.getTransactionReceipt(res, function (error, result) {
+                    if (!error) {
+                        //console.log(JSON.stringify(result));
+                        //console.log(result.status);   //상태 출력
+
+                        //status가 0x1이면 uid 변경 코드 추가하기
+                        if (result.status == "0x1") {
+                            console.log("0x1과 같음");
+                            isTrans=true; 
+                            //db 수정
+                            //changeuid();
+                            console.log("결과값2" , isTrans);
+                            return isTrans;
+                            
+                        }
+                    }
+                    else
+                        console.error(error);
+                })
+            }
+            else{
+                console.log("기다려주세요")
+            }
+        }
+
+
+        function callTransfer(meta, price) {
+            //let recipent = $('#recipent').val();
+
+            //let transferValue = BigNumber($("#tokenValue").val());
+
+            /*if (transferValue.isLessThan(0)) {
+                alert("0보다 큰값을 입력해 주세요!");
+                return;
+            }*/
+
+            //transferValue = transferValue.multipliedBy($("#transfer_unit").val());
+            //console.log(account);
+
+            //console.log(meta);
+            //console.log(transferValue.toFixed());
+
+            GameToken.transfer.sendTransaction(
+                meta,
+                price,
+                {
+                    from: account,
+                    gasPrice: BigNumber("14.3").multipliedBy(500000000)
+                },
+                (error, result) => {
+                    if (errorChk("transfer(transaction) 실패", error)) return false;
+                    console.log("여기", result);
+                    res = result;
+                    var txURl = "https://goerli.etherscan.io/tx/" + result;
+                    /*txLog({
+                        targetEl: "result",
+                        msg: account + " 에게 " + price + " GT 전송 완료 [<a target=\"_blank\" href=\"" + txURl + "\">" + result + "</a>]"
+                    })*/
+                }
+            );
+        }
+    </script>
+    <script>
+        const db = firebase.firestore();
         firebase.auth().onAuthStateChanged((user) => {
             if (user) {
                 $('#isLogin').text('로그아웃');
@@ -90,9 +491,6 @@
                 });
             }
         });
-        //판매중인 티켓 리스트 나열 
-        //데이터 가져오기
-        const db = firebase.firestore();
         db.collection('ticket')
             .where('price', '!=', 'null')
             .get()
@@ -113,44 +511,73 @@
                 <p class="user-box__uid">   예매자명 : ${doc.data().uid}</p>
                 <p class="user-box__tCost">   판매 가격 : ${doc.data().price}</p>
                 <button type="button" id="sBtn">구매</button>
+                <button type="button" id="btnCheck">구매 확정</button>
+                <button type="button" onClick="isTransfered();">구매 확정</button>
             </div>
         </div>`;
 
                     document.querySelector('.myContent').insertAdjacentHTML('afterbegin', userTemplate);
-                    //const db = firebase.firestore();
+                    //const db = firebase.firestore(); <
+                    //<button type="button" onClick="isTransfered();">구매 확정</button>
                     db.collection('ticket')
                     $('#sBtn').click(function () {  //구매 버튼을 클릭한 결과
                         if (userid) {
                             if (confirm('정말로 티켓을 구매하시겠습니까?')) {
-                                //티켓DB에서 아이디 변경 (판매자 → 구매자)
-                                //티켓 정보 가져와서 소유자명 변경하기
-                                db.collection('ticket').doc(doc.id).update({
-                                    //**로그인된 사람으로 수정하기**
-                                    uid: userid,
-                                    //price 값 'null'로 변경
-                                    price: "null"
-                                }).then(() => {
-                                    console.log("Owner changed!!");
-                                    window.location.href = "buy"
-                                })
-                                    .catch((error) => {
-                                        // The document probably doesn't exist.
-                                        console.error("Error rewritten: ", error);
-                                    });
-
-                                return
+                                meta = doc.data().metamask;
+                                price = doc.data().price;
+                                callTransfer(meta, price);  //돈 보내기
                             }
+                            $('#btnCheck').click(function () {
+                                console.log("터치됨");
+                                if (isTransfered()) { //db 수정
+                                    // 티켓DB에서 아이디 변경 (판매자 → 구매자)
+                                    //티켓 정보 가져와서 소유자명 변경하기
+                                    console.log("true 전달됨")
+                                    db.collection('ticket').doc(doc.id).update({
+                                        //**로그인된 사람으로 수정하기**
+                                        uid: userid,
+                                        //price 값 'null'로 변경
+                                        price: "null",
+                                        metamask: account
+                                    }).then(() => {
+                                        console.log("Owner changed!!");
+                                        meta = doc.id
+                                        console.log(meta);
+                                        //window.location.href = "buy"
+                                    })
+                                        .catch((error) => {
+                                            // The document probably doesn't exist.
+                                            console.error("Error rewritten: ", error);
+                                        });
+                                }
+                                else console.log("먼저 실행됨")
+                            })
                         }
-                        else{
+                        else {
                             alert("로그인 후 이용 가능합니다.");
                         }
                     });
-
-
                 });
 
-            });
 
+            });
+            /*function changeuid(){
+                    document.querySelector('.myContent').insertAdjacentHTML('afterbegin', userTemplate);
+                    db.collection('ticket').doc(doc.id).update({
+                            //**로그인된 사람으로 수정하기**
+                            uid: userid,
+                            //price 값 'null'로 변경
+                            price: "null",
+                            metamask: account
+                        }).then(() => {
+                            console.log("Owner changed!!");
+                            //window.location.href = "buy"
+                        })
+                            .catch((error) => {
+                                // The document probably doesn't exist.
+                                console.error("Error rewritten: ", error);
+                            });
+                }*/
 
     </script>
 

@@ -9,12 +9,12 @@
   <!--<link rel="stylesheet" href="assets/css/main2.css" />-->
 
   <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"
-        media="all">
+    media="all">
 
 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
-        media="all">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css" rel="stylesheet" media="all">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+    media="all">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css" rel="stylesheet" media="all">
 
 
   <title>판매</title>
@@ -32,17 +32,17 @@
 
 <body class="homepage is-preload">
   <div id="page-wrapper">
-      <!-- Nav -->
-      <nav id="nav">
-          <ul>
-              <li><a href="index">Home</a></li>
-              <li><a href="buy">구매</a></li>
-              <li class="current">
-                <a href="sales">판매</a>
-              </li>
-              <li><a href="login" id="isLogin">로그인</a></li>
-            </ul>
-      </nav>
+    <!-- Nav -->
+    <nav id="nav">
+      <ul>
+        <li><a href="index">Home</a></li>
+        <li><a href="buy">구매</a></li>
+        <li class="current">
+          <a href="sales">판매</a>
+        </li>
+        <li><a href="login" id="isLogin">로그인</a></li>
+      </ul>
+    </nav>
 
   </div>
 </body>
@@ -81,21 +81,21 @@
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         $('#isLogin').text('로그아웃');
-                userid = user.uid; //사용자 아이디 가져옴
-                console.log(userid);
-                //로그아웃 클릭 시
-                $('#isLogin').click(function () {
-                    firebase.auth().signOut().then(function () {
-                        alert("로그아웃 되었습니다")
-                        //로그인 페이지로 이동시키고 세션 저장시키기
-                        window.location.href = "login"
-                    }).catch(function (error) {
-                        if (error) {
-                            alert("로그인 실패");
-                        }
-                    });
-                });
-      } else{
+        userid = user.uid; //사용자 아이디 가져옴
+        console.log(userid);
+        //로그아웃 클릭 시
+        $('#isLogin').click(function () {
+          firebase.auth().signOut().then(function () {
+            alert("로그아웃 되었습니다")
+            //로그인 페이지로 이동시키고 세션 저장시키기
+            window.location.href = "login"
+          }).catch(function (error) {
+            if (error) {
+              alert("로그인 실패");
+            }
+          });
+        });
+      } else {
         alert("로그인후 이용 가능합니다.");
       }
 
@@ -129,35 +129,31 @@
             //const db = firebase.firestore();
             db.collection('ticket')
             $('#tpButton').click(function () {  //판매 버튼을 클릭한 결과
-              if (document.getElementById("price").value == "") { //빈칸이면 알림창
-                alert("가격을 입력해주세요.");
-                return false;
-              }
               if (doc.data().tCost < parseInt(document.getElementById("price").value)) { //가격이 원가보다 높으면 에러
                 alert("원가 이하 가격을 입력해주세요.");
                 return false;
               }
-              else
+              else {
                 if (!confirm('정말로 티켓을 판매하시겠습니까?')) {
                   return
-
                 }
-              
-              //poster image 클릭 시 티켓정보 출력
-              id
 
-            
-              //ticketDB에 tPrice 값 추가
-              db.collection('ticket').doc(doc.id).update({
-                price: $('#price').val()
-              }).then(() => {
-                console.log("Document successfully updated!");
-                window.location.href = "sales"
-              })
-                .catch((error) => {
-                  // The document probably doesn't exist.
-                  console.error("Error updating document: ", error);
-                });
+                //poster image 클릭 시 티켓정보 출력
+                //id
+
+
+                //ticketDB에 tPrice 값 추가
+                db.collection('ticket').doc(doc.id).update({
+                  price: $('#price').val()
+                }).then(() => {
+                  console.log("Document successfully updated!");
+                  window.location.href = "sales"
+                })
+                  .catch((error) => {
+                    // The document probably doesn't exist.
+                    console.error("Error updating document: ", error);
+                  });
+              }
             });
           });
         });
